@@ -1,0 +1,27 @@
+/* ========================================================================
+   Component: Table view
+ ========================================================================== */
+
+/*.{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}*/
+
+#antibiotictest td, #antibiotictest th {
+  border: 3px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#antibiotictest tr:nth-child(even){background-color: #f2f2f2;}
+
+#antibiotictest tr:hover {background-color: #ddd;}
+
+#antibiotictest th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+}

@@ -1,0 +1,74 @@
+/* ========================================================================
+   Component: Table view
+ ========================================================================== */
+
+/** 
+                Set the margins of the page to 0, so the footer and the header
+                can be of the full height and width !
+             **/
+            @page {
+                margin: 0cm 0cm;
+            }
+
+            /** Define now the real margins of every page in the PDF **/
+            body {
+                margin-top: 2cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
+                margin-bottom: 1cm;
+            }
+
+            /** Define the header rules **/
+            header {
+                position: fixed;
+                top: 0cm;
+                left: 0cm;
+                right: 0cm;
+                height: 2cm;
+
+                /** Extra personal styles **/
+                background-color: #03a9f4;
+                color: white;
+                text-align: center;
+                line-height: 1cm;
+            }
+
+            /** Define the footer rules **/
+            footer {
+                position: fixed; 
+                bottom: 0cm; 
+                left: 0cm; 
+                right: 0cm;
+                height: 1.5cm;
+
+                /** Extra personal styles **/
+                background-color: #03a9f4;
+                color: white;
+                text-align: center;
+                line-height: 1cm;
+            }
+
+            #pdftableview td, #pdftableview th {
+            border: 3px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            }
+
+            #pdftableview tr:nth-child(even){background-color: #f2f2f2;}
+
+            #pdftableview tr:hover {background-color: #ddd;}
+
+            #pdftableview th {
+              padding-top: 12px;
+              padding-bottom: 12px;
+              text-align: center;
+              background-color: #4CAF50;
+              color: white;
+            }
+
+            #pdftableview hr { 
+              height: 3px;
+              color: #4CAF50;
+              background-color: #4CAF50;
+              border: none;
+             }
