@@ -8,7 +8,7 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
        <div class="card">
-            <div class="card-header">Cerate User</div>
+            <div class="card-header">Create User</div>
               <div class="card-body">
 
                 @if(Session::has('message'))
@@ -32,6 +32,16 @@
                           <label for="password">Password:</label>
                           <input type="password" class="form-control" autocomplete="off" id="password" name="password" required>
                         </div>
+						
+						<div class="form-group">
+							<label for="">Institution Name</label>
+							<select name="institution" class="form-control" required>
+							  <option selected disabled value=""> Select Institution </option>
+							  @foreach($institutions as $row=>$val)
+								  <option value="{{$val->institution_id}}"> {{$val->institution_name}} </option>
+							  @endforeach
+							</select>
+						</div>
 
                         <div class="form-group">
                           <button style="cursor:pointer" type="submit" class="btn btn-primary">Submit</button>

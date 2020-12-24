@@ -1702,6 +1702,14 @@ ALTER TABLE `model_has_roles`
 ALTER TABLE `role_has_permissions`
   ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+  
+--
+-- Aftab's edits
+--
+  
+ALTER TABLE `users`
+ADD COLUMN `institution_id` INT(10) NOT NULL DEFAULT '1' AFTER `id`;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

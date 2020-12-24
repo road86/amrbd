@@ -70,6 +70,8 @@ Route::get('/usermanagement/managementview', 'UsersController@ManagementView');
 Route::get('/usermanagement/usersview', 'UsersController@UserView');
 Route::get('/usermanagement/userscreate', 'UsersController@UserCreate');
 Route::post('/usermanagement/usersstore', 'UsersController@UserStore');
+Route::get('/usermanagement/edit-users-name/{id}', 'UsersController@EditUsersName');
+Route::post('/usermanagement/updateuser', 'UsersController@UpdateUser');
 
 //User Role
 Route::get('/usermanagement/rolesview', 'RolesController@RolesView');

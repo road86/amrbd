@@ -28,7 +28,7 @@
                 <th scope="col">SL #</th>
                 <th scope="col">User Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">Created By</th>
+                <th scope="col">Institute</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -40,13 +40,13 @@
                 <th scope="row">{{ $count }}</th>
                 <td>{{ $data->name }}</td>
                 <td>{{ $data->email }}</td>
-                <td style="text-align: center">{{ $data->created_by }}</td>
+                <td style="text-align: center">{{ $data->institution->institution_name }}</td>
                 
                 <td style="text-align: center">
                   
-                  <a class="btn btn-success btn-sm" href="{{ url('/pathogen/edit-pathogen-name/'.$data->pathogen_id) }}">EDIT</a>
+                  <a class="btn btn-success btn-sm" href="{{ url('/usermanagement/edit-users-name/'.$data->id) }}">EDIT</a>
 
-                  <a class="btn btn-danger btn-sm" href="{{ url('/pathogen/delete-pathogen-name/'.$data->pathogen_id)}}">DELETE</a>
+                  <a class="btn btn-danger btn-sm" href="{{ url('/usermanagement/edit-users-name/'.$data->id)}}">DELETE</a>
 
                 </td> 
               </tr>

@@ -13,21 +13,43 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Pathogen Name Update Form</div>
-
+                <div class="card-header">Update User</div>
                 <div class="card-body">
-
-                    <form action="{{ url('/') }}/pathogen/update-pathogen-name" method="POST">
+					@if(Session::has('message'))
+					  <p class="alert {{ Session::get('alert-class', 'alert-warning') }}">{{ Session::get('message') }}</p>
+					@endif
+                    <form action="{{ url('/') }}/usermanagement/updateuser" method="POST">
                       {{ csrf_field() }}
-                      <div class="form-group">
-                        <label for="pathogen_name">Pathogen Name</label>
-                        <input type="text" class="form-control"  value="{{$pathogenname->pathogen_name}}" name="pathogen_name">
+					  
+					  <div class="form-group">
+                          <label for="name">Name:</label>
+                          <input type="text" class="form-control" autocomplete="off" id="name" name="name" value="{{$user->name}}" required>
+                        </div>
+ 
+                        <div class="form-group">
+                          <label for="email">Email:</label>
+                          <input type="email" class="form-control" autocomplete="off" id="email" name="email" value="{{$user->email}}" required>
+                        </div>
+ 
+                        <div class="form-group">
+                          <label for="password">Password:</label>
+                          <input type="password" class="form-control" autocomplete="off" id="password" name="password" value="">
+                        </div>
+						
+						<div class="form-group">
+							<label for="">Institution Name</label>
+							<select name="institution" class="form-control" required>
+							  <option selected disabled value=""> Select Institution </option>
+							  @foreach($institutions as $row=>$val)
+								  <option value="{{$val->institution_id}}" {{ ( $val->institution_id == $user->institution_id) ? 'selected' : '' }}> {{$val->institution_name}} </option>
+							  @endforeach
+							</select>
+						</div>
 
-                        <input type="hidden" class="form-control"  value="{{$pathogenname->pathogen_id}}" name="pathogen_id">
-                        
-                      </div>
-
-                      <button type="submit" class="btn btn-primary">Update</button>
+                        <div class="form-group">
+							<input type="hidden" class="form-control"  value="{{$user->id}}" name="user_id">
+							<button style="cursor:pointer" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
                     </form>
             </div>
         </div>

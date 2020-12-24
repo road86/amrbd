@@ -7,6 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
+use App\Institutions;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -17,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','created_by',
+        'name', 'email', 'password','created_by','institution_id',
     ];
 
     /**
@@ -38,5 +40,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+	public function institution(){
+   		return $this->hasOne('App\Institutions','institution_id','institution_id');
+   	}
     
 }

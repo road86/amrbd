@@ -7,6 +7,7 @@ use DB;
 use Auth;
 use Carbon\Carbon;
 use App\User;
+use App\Institutions;
 use Session;
 use PDF;
 
@@ -27,14 +28,15 @@ class UsersController extends Controller
 	}
 
 	public function UserView(){
-
-		 $user = User::get();
-         return view('usermanagement.userview',compact('user'));
+		$user = User::with('institution')->get();
+		
+		//$user = User::get();
+        return view('usermanagement.userview',compact('user'));
 	}
 
 	public function UserCreate(){
-
-         return view('usermanagement.usercreate');
+		$institutions = Institutions::get();
+        return view('usermanagement.usercreate',compact('institutions'));
 	}
 
     public function UserStore(Request $request){
@@ -43,18 +45,19 @@ class UsersController extends Controller
             							'name' => 'required',
            								'email' => 'required',
             							'password' => 'required',
+										'institution' => 'required',
         							  ]);
 	        
 	        $user = Auth::user();
             $current_time = Carbon::now();
 
-
             $storeuser = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'created_by' => Auth::user()->id,
-        ]);
+				'name' => $request->name,
+				'email' => $request->email,
+				'institution_id' => $request->institution,
+				'password' => Hash::make($request->password),
+				'created_by' => Auth::user()->id,
+			]);
        
 
             if('$storeuser') {
@@ -63,6 +66,38 @@ class UsersController extends Controller
             }
     }
    
+	public function EditUsersName($id)
+	{
+		$institutions = Institutions::get();
+		//$user = User::find($id);
+		$user = User::with('institution')->find($id);
+  
+		return view('usermanagement.edit',compact('user','institutions'));
+	}
+	
+	public function UpdateUser(Request $request) 
+	{
+		/* var_dump($request);
+		die(); */
+		
+		$this->validate($request, [
+			'name' => 'required',
+			'email' => 'required',
+			'institution' => 'required',
+		]);
+		
+		$user = User::find($request->user_id);
+		$user->name = $request->name;
+		$user->email = $request->email;
+		$user->institution_id = $request->institution;
+	   
+		if($user->save()) {
+			Session::flash('message', 'User is Updated!');
+			return redirect('/usermanagement/usersview');
+		}
+	   
+		
+	}
 
     public function export(){
         return Excel::download(new UsersExport, 'users.xlsx');
