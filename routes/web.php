@@ -27,8 +27,11 @@ Route::resource('showprofile', 'ShowProfileController');
 
 Route::get('/isolatedatatype/isolatetypeview', 'IsolateDataTypeController@IsolateTypeView');
 Route::get('/isolatedatatype/isolatetypeindividualview', 'IsolateDataTypeController@IsolateTypeIndividualView');
-
 Route::get('/isolatedatatype/isolatetypesummarizeview', 'IsolateDataTypeController@IsolateTypeSummarizeView');
+Route::get('/isolatedatatype/isolatetypefileuploadview', 'IsolateDataTypeController@IsolateTypeFileUploadView');
+Route::post('/isolatedatatype/uploadZipFile', 'IsolateDataTypeController@UploadZipFile');
+Route::get('/isolatedatatype/isolatetypecsvuploadview', 'IsolateDataTypeController@IsolateTypeCSVUploadView');
+Route::post('/isolatedatatype/uploadCSVFile', 'IsolateDataTypeController@UploadCSVFile');
 
 Route::get('/isolatedatatype/dataview', 'IsolateDataTypeController@DataView');
 //Route::get('/singleisolatesample/create', 'SingleIsolateSampleController@create');

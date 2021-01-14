@@ -49,7 +49,7 @@ class PathogenController extends Controller
 
        $storepathogen = DB::table('pathogen')->insert(['pathogen_name' => $request->pathogen_name, 'created_by' => $user->id, 'created_at' => $current_time]);
 
-         if('$storepathogen') {
+        if('$storepathogen') {
         Session::flash('message', 'New Pathogen is Added on the Record!');
 
         return redirect('/pathogen/view');

@@ -21,11 +21,12 @@
 
                <table id="tableview" align="center">
                     <tr>
-                        <td width="50%">
+                        <td width="100%" colspan="2">
                           <label for="test_date"><h4 style="color:green">Test Date</h4></label>
                           <input type="date" class="form-control" name="test_date" required>
+						  <input type="hidden" name="institutions" class="form-control" required value="{{auth()->user()->institution_id}}">
                         </td>
-                        <td width="50%">                
+                        <!-- <td width="50%">                
                           <label for=""><h4 style="color:green">Institution Name</h4></label>
                           <select name="institutions" class="form-control" required>
                             <option selected disabled value=""> Select Institution</option>
@@ -33,7 +34,7 @@
                              <option value="{{$val->institution_id}}">{{$val->institution_name}} </option>
                             @endforeach
                           </select>
-                         </td>
+                         </td> -->
                       </tr>
 
                       <tr>

@@ -22,6 +22,7 @@
                         <td width="40%">
                           <label for="test_date_from"><h4 style="color:green">Test Date From</h4></label>
                           <input type="date" class="form-control" name="test_date_from" required>
+						  <input type="hidden" name="institution" class="form-control" required value="{{auth()->user()->institution_id}}">
                         </td>
                         <td width="40%"
                           <label for="test_date_to"><h4 style="color:green">Test Date To</h4></label>
@@ -30,7 +31,7 @@
                       </tr>
 
                       <tr>
-                       <td>
+                       <!-- <td>
                           <label for=""><h4 style="color:green">Institution Name</h4></label>
                           <select name="institution" class="form-control" required>
                             <option selected disabled value=""> Select Institution</option>
@@ -38,7 +39,7 @@
                              <option value="{{$val->institution_id}}">{{$val->institution_name}} </option>
                             @endforeach
                           </select>
-                        </td>
+                        </td> -->
                         <td> 
                           <label for=""><h4 style="color:green">Species Name</h4></label>
                           <select name="species" class="form-control species" required>
@@ -48,10 +49,7 @@
                                 @endforeach
                           </select>
                         </td>
-                      </tr>
-
-                      <tr>
-                        <td>
+						<td>
                           <label for=""><h4 style="color:green">Location on the body(Specimen)</h4></label>
                           <select name="specimen" class="form-control" required>
                             <option selected disabled value=""> Select Specimen</option>
@@ -60,7 +58,11 @@
                                 @endforeach
                           </select>
                         </td>
-                        <td>
+                      </tr>
+
+                      <tr>
+                        
+                        <td colspan="2">
                           <label for=""><h4 style="color:green">Pathogen Name</h4></label>
                           <select name="pathogen" class="form-control" required>
                             <option selected disabled value=""> Select Pathogen</option>

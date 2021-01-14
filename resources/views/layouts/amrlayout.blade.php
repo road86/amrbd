@@ -226,46 +226,55 @@
                        <em class="icon-grid"></em><span>Species</span>
                      </a></li>
                      @endif
+					 @if(auth('web')->user()->hasAnyPermission(['Breed']))
                     <!-- Breed Menu-->
                     <li class=" "><a href="{{url('/')}}/breed/view" title="Breed" >
                        <em class="fas fa-bars"></em><span>Breed</span>
                      </a></li>
-
+					@endif
+					 @if(auth('web')->user()->hasAnyPermission(['Specimen']))
                      <!-- Specimen Menu-->
                     <li class=" "><a href="{{url('/')}}/specimen/view" title="Specimen" >
                        <em class="fas fa-list-alt"></em><span>Specimen</span>
                      </a></li>
-
+					@endif
+					 @if(auth('web')->user()->hasAnyPermission(['Sampling Location']))
                      <!-- Specimen Collection Location Name Menu -->
                      <li class=" "><a href="{{url('/')}}/specimencollectionlocation/view" title="Specimen Collection Location" ><em class="icon-location-pin"></em><span>Sampling Location</span>
                      </a></li>
-
+					@endif
+					 @if(auth('web')->user()->hasAnyPermission(['Pathogen']))
                        <!-- Pathogen Menu-->
                     <li class=" "><a href="{{url('/')}}/pathogen/view" title="Pathogen" >
                         <em class="fas fa-flask "></em><span>Pathogen</span>
                      </a></li>
-
+					@endif
+					 @if(auth('web')->user()->hasAnyPermission(['Antibiotic']))
                      <!-- Antibiotic Menu-->
                     <li class=" "><a href="{{url('/')}}/antibiotic/view" title="Antibiotic" >
                        <em class="icon-chemistry"></em><span>Antibiotic</span>
                      </a></li>
-
+					@endif
+					 @if(auth('web')->user()->hasAnyPermission(['Test Method']))
                          <!-- Test Method Menu-->
                     <li class=" "><a href="{{url('/')}}/testmethod/view" title="Test Method" >
                       <em class="fas fa-file"></em><span>Test Method</span>
                      </a></li>
 
-
+					@endif
+					 @if(auth('web')->user()->hasAnyPermission(['Sensitivity']))
                      <!-- Test Sensitivies Menu-->
                     <li class=" "><a href="{{url('/')}}/testsensitivity/view" title="Test Sensitivity Type">
                       <em class="icon-grid"></em><span>Sensitivity Type</span>
                      </a></li>
-
+					@endif
+					 @if(auth('web')->user()->hasAnyPermission(['ZDIS']))
 
                      <!-- Zone Diameter Interpretive Standards (ZDIS) Menu-->
                     <li class=" "><a href="{{url('/')}}/zdis/view" title="zdis">
                       <em class="fas fa-file-alt"></em><span>ZDIS Reference Table </span>
                      </a></li>
+					 @endif
                      <!-- logout part -->
                      <li class=" "><a 
                      href="{{ route('logout') }}"
