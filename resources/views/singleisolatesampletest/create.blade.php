@@ -54,7 +54,7 @@
                       <td>
                       </td>
                       <td style="text-align: right">
-                        <button type="submit" class="btn btn-primary">Next</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                       </td>
                     </tr>
                     </table>

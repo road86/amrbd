@@ -13,13 +13,10 @@ use App\Sglizdissampletest;
 use App\Antibiotic;
 use App\Samples;
 use App\Institutions;
-use App\Species;
-use App\Breed;
 use App\Specimen;
 use App\Testmethod;
 use App\Pathogen;
 use App\Testsensitivitie;
-use App\Specimencollectionlocation;
 use Carbon\Carbon;
 use Session;
 use PDF;
@@ -67,14 +64,11 @@ class ReportController extends Controller
     {
               
             $institution = Institutions::orderBy('institution_name', 'asc')->get();
-            $species = Species::orderBy('species_name', 'asc')->get();
-            $breed = Breed::get();
             $specimen = Specimen::orderBy('specimen_name', 'asc')->get();
-            $samplinglocation = Specimencollectionlocation::orderBy('specimen_location_name', 'asc')->get();
             $testmethod = Testmethod::orderBy('test_method_name', 'asc')->get();
 
                           
-        return view('report.indisolatesirreportcreate',compact('institution','species','breed','specimen','samplinglocation','testmethod'));
+        return view('report.indisolatesirreportcreate',compact('institution','specimen','testmethod'));
     }
 
 
@@ -83,21 +77,17 @@ class ReportController extends Controller
     {
               
             $institution = Institutions::orderBy('institution_name', 'asc')->get();
-            $species = Species::orderBy('species_name', 'asc')->get();
-            $breed = Breed::get();
             $specimen = Specimen::orderBy('specimen_name', 'asc')->get();
-            $samplinglocation = Specimencollectionlocation::orderBy('specimen_location_name', 'asc')->get();
             $testmethod = Testmethod::orderBy('test_method_name', 'asc')->get();
 
                           
-        return view('report.indisolatezdisreportcreate',compact('institution','species','breed','specimen','samplinglocation','testmethod'));
+        return view('report.indisolatezdisreportcreate',compact('institution','specimen','testmethod'));
     }
 
 
    //Individual Isolate SIR Data Report Calculation Method for all Sample parameters
 
     public function IndIsirReportCalculation(Request $request)
-
     { 
             $testCount= array();            
             $sensitivity= array();
@@ -107,54 +97,30 @@ class ReportController extends Controller
     
             // dd($getData->get());
 
-        if(isset($request->institution)){
+			if(isset($request->institution)){
+				$getData=$getData->where('institution_id',$request->institution);       
+			}
 
-             $getData=$getData->where('institution_id',$request->institution);       
-        }
+			if(isset($request->testmethod)){
+				$getData=$getData->where('test_method_id',$request->testmethod);
+			}
 
-
-        if(isset($request->species) && isset($request->breed)){
-
-             $getData=$getData->where('species_id',$request
-                ->species)->where('breed_id',$request->breed);
-        }
-
-
-        if(isset($request->specimen)){
-
-            $getData=$getData->where('specimen_id',$request->specimen);
-        }
-
-
-        if(isset($request->samplinglocation)){
-
-            $getData=$getData->where('specimen_location_id',$request->samplinglocation);
-        }
-
-        if(isset($request->testmethod)){
-
-            $getData=$getData->where('test_method_id',$request->testmethod);
-        }
-
-
-        if(isset($request->from_test_date) && isset($request->to_test_date)){
-
-            $getData=$getData->whereBetween('test_date',[$request->from_test_date,$request->to_test_date]); 
-        }
-
+			if(isset($request->from_test_date) && isset($request->to_test_date)){
+				$getData=$getData->whereBetween('test_date',[$request->from_test_date,$request->to_test_date]); 
+			}
 
             $getData=$getData->get();
 
             //dd($getData);   
            
             $testSensetivity= Testsensitivitie::get();
-            $pathogen  = Pathogen::get();
+            $pathogen  = Pathogen::get()->sortby("pathogen_name");
 
             foreach ($pathogen as $pkey => $pvalue) {
-                $pathogenName[$pvalue->pathogen_id] = $pvalue->pathogen_name;
+				$pathogenName[$pvalue->pathogen_id] = $pvalue->pathogen_name;
             }
 
-            $antibiotic  = Antibiotic::get();
+            $antibiotic  = Antibiotic::get()->sortby("antibiotic_name");
 
             foreach ($antibiotic as $akey => $avalue) {
                 $antibioticName[$avalue->antibiotic_id] = $avalue->antibiotic_name;

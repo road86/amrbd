@@ -23,13 +23,14 @@
  <br>
  @if(count($testCount)>0)
   <table id= "tableview" align="center">
-    <?php echo 'Total Number of Isolate Tested: ' ?>
+    <?php //echo 'Total Number of Isolate Tested: ' ?>
 
             <thead>
               <tr>
-                <th scope="col" width="20">Antibiotic Name</th>
+                <th scope="col" width="20">Antibiotic</th>
                 @foreach($testCount as $countRow=>$countVal)
-                  <th scope="col" width="20">{{$pathogenName[$countRow]}}</th>                @endforeach
+                  <th scope="col" width="20">{{$pathogenName[$countRow]}}</th>                
+				@endforeach
               </tr>
             </thead>
             @php $count = 0; @endphp
@@ -39,6 +40,7 @@
                 @foreach($pathogenCount as $prow=>$pal)
                   <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,2)}}%</b></td>
                 @endforeach
+				<td style="text-align: center"><b>{{number_format($totalCount)}}</b></td>
               </tr>
                @foreach($antibioticName as $aVal=>$aName)
               <tr>               
@@ -72,13 +74,6 @@
                           {{number_format((($val[$aVal][1])*100)/$total,2)}}% 
 
 
-                  {{--  {{$val[$aVal][1]}}| {{$val[$aVal][2]}} | {{$val[$aVal][3]}} <br> --}}  
-
-                  {{--     | {{number_format((($val[$aVal][2])*100)/$total,0)}}% |
-                      {{number_format((($val[$aVal][3])*100)/$total,0)}}% |   --}}
-
-                     
-
                       </td>
                       @else
                       <td style="text-align: center;">---</td>
@@ -87,7 +82,7 @@
                           
               </tr>
                @endforeach   
-               {{$count}}
+               {{-- $count --}}
             </tbody> 
          </table>
          @else

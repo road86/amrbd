@@ -13,12 +13,12 @@ use Auth;
 use App\Sglisample;
 use App\Samples;
 use App\Institutions;
-use App\Species;
-use App\Breed;
+/* use App\Species;
+use App\Breed; */
 use App\Specimen;
 use App\Testmethod;
 use App\Pathogen;
-use App\Specimencollectionlocation;
+/* use App\Specimencollectionlocation; */
 use Carbon\Carbon;
 use Session;
 
@@ -35,10 +35,10 @@ class SingleIsolateSampleController extends Controller
     {
               //$institutions = Institutions::get();
               $institutions = Institutions::orderBy('institution_name', 'asc')->get();
-              $species = Species::get();
-              $breeds = Breed::get();
+              /* $species = Species::get();
+              $breeds = Breed::get(); */
               $specimen = Specimen::get();
-              $specimencollectionlocation = Specimencollectionlocation::get();
+              /* $specimencollectionlocation = Specimencollectionlocation::get(); */
               $testmethod = Testmethod::get();
 
               $pathogen = Pathogen::orderBy('pathogen_name','asc')->get();
@@ -47,18 +47,19 @@ class SingleIsolateSampleController extends Controller
 
               //return redirect('/singleisolatesample/create');
 
-        return view('singleisolatesample.create',compact('institutions','species','breeds','specimen','specimencollectionlocation','testmethod','pathogen'));
+        /* return view('singleisolatesample.create',compact('institutions','species','breeds','specimen','specimencollectionlocation','testmethod','pathogen')); */
+		return view('singleisolatesample.create',compact('institutions','specimen','testmethod','pathogen'));
     }
 
 
-    public function getBreedBySpecies($id){
+    /* public function getBreedBySpecies($id){
         $breeds = Breed::where('species_id',$id)->get();
         $html='';
         foreach ($breeds as $key => $value) {
             $html.='<option value='.$value->breed_id.'>'.$value->breed_name.'</option>';
         }
         return $html;
-    }
+    } */
 
 
 
@@ -72,14 +73,15 @@ class SingleIsolateSampleController extends Controller
            $sglisirsamplepostreview = $request->all();
            $test_date=$request->test_date;
            $institutions=$request->institutions;
-           $species=$request->species;
-           $breeds=$request->breeds;
+           /* $species=$request->species;
+           $breeds=$request->breeds; */
            $specimen=$request->specimen;
-           $specimencollectionlocation=$request->specimencollectionlocation;
+           /* $specimencollectionlocation=$request->specimencollectionlocation; */
            $testmethods=$request->testmethods;
            $pathogen=$request->pathogen;       
 
-        return view('singleisolatesample.createpostconfirmation', compact('sglisirsamplepostreview','test_date','institutions','species','breeds','specimen','specimencollectionlocation','testmethods','pathogen'));
+        /* return view('singleisolatesample.createpostconfirmation', compact('sglisirsamplepostreview','test_date','institutions','species','breeds','specimen','specimencollectionlocation','testmethods','pathogen')); */
+		return view('singleisolatesample.createpostconfirmation', compact('sglisirsamplepostreview','test_date','institutions','specimen','testmethods','pathogen'));
 
     }
 
@@ -89,8 +91,10 @@ class SingleIsolateSampleController extends Controller
         $current_time = Carbon::now();
        // dd($request);
 
-        $store=DB::table('sglisamples')->insert(['test_date' => $request->test_date, 
-            'institution_id' => $request->institutions, 'species_id'=>$request->species, 'breed_id'=>$request->breeds, 'specimen_id'=>$request->specimen, 'specimen_location_id'=>$request->specimencollectionlocation, 'test_method_id'=>$request->testmethods, 'pathogen_id'=>$request->pathogen, 'created_by' => $user->id, 'created_at' => $current_time]);
+        /* $store=DB::table('sglisamples')->insert(['test_date' => $request->test_date, 
+            'institution_id' => $request->institutions, 'species_id'=>$request->species, 'breed_id'=>$request->breeds, 'specimen_id'=>$request->specimen, 'specimen_location_id'=>$request->specimencollectionlocation, 'test_method_id'=>$request->testmethods, 'pathogen_id'=>$request->pathogen, 'created_by' => $user->id, 'created_at' => $current_time]); */
+		$store=DB::table('sglisamples')->insert(['test_date' => $request->test_date, 
+            'institution_id' => $request->institutions, 'specimen_id'=>$request->specimen, 'test_method_id'=>$request->testmethods, 'pathogen_id'=>$request->pathogen, 'created_by' => $user->id, 'created_at' => $current_time]);
 
         $lastId= DB::getPdo()->lastInsertId();
 

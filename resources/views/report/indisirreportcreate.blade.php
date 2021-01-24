@@ -28,26 +28,7 @@
                           </select>
                       </td>
                   
-                      <td width="33%"> 
-                          <label for=""><h4>Species Name</h4></label>
-                          <select name="species" class="form-control species">
-                              <option selected disabled value=""> Select Species</option>
-                                @foreach($species as $row=>$val)
-                              <option value="{{$val->species_id}}"> {{$val->species_name}} </option>
-                                @endforeach
-                          </select>
-                      </td>
-
                       <td width="33%">
-                          <label for=""><h4>Breed Name</h4></label>
-                          <select name="breed" class="form-control breed">
-                            <option selected disabled> Select Breed</option>
-                          </select>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
                         <label for=""><h4>Specimen</h4></label>
                           <select name="specimen" class="form-control">
                             <option selected disabled value=""> Select Specimen</option>
@@ -56,18 +37,8 @@
                                 @endforeach
                           </select>
                       </td>
-                      
-                      <td>
-                        <label for=""><h4>Sampling Location Name</h4></label>
-                          <select name="samplinglocation" class="form-control">
-                            <option selected disabled value=""> Select Sampling Location Name</option>
-                              @foreach($samplinglocation as $row=>$val)
-                                <option value="{{$val->specimen_location_id}}"> {{$val->specimen_location_name}} </option>
-                              @endforeach
-                          </select>
-                      </td>
-                    
-                      <td>
+
+                      <td width="33%">
                           <label for=""><h4>Test Method Name</h4></label>
                           <select name="testmethod" class="form-control">
                             <option selected disabled value=""> Select Test Type</option>
@@ -75,8 +46,10 @@
                                 <option value="{{$val->test_method_id}}"> {{$val->test_method_name}} </option>
                               @endforeach
                           </select>
-                        </td>
-                      </tr>
+                      </td>
+                    </tr>
+
+                    
 
                       <tr>
                         <td>
@@ -104,7 +77,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
   $(document).ready(function(){
-    $(".species").change(function(){
+    /* $(".species").change(function(){
       var species = $(this).val();
         $.ajax({
           url: "{{url('get-breed-by-species/')}}"+'/'+species,
@@ -114,7 +87,7 @@
             $(".breed").empty();
             $(".breed").append(result);
         }});
-    });
+    }); */
   });
 </script>
 @endsection

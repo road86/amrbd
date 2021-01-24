@@ -26,9 +26,9 @@ class SingleIsolateSampleTestController extends Controller
     {
     	$sglisample = Sglisample::get();
     	$sglisampletest = Sglisampletest::get();
-      $pathogen = Pathogen::get();
-      $antibiotic = Antibiotic::get();
-      $testsensitivity = Testsensitivitie::get();
+		$pathogen = Pathogen::get()->sortby("pathogen_name");
+		$antibiotic = Antibiotic::get()->sortby("antibiotic_name");
+		$testsensitivity = Testsensitivitie::get();
         
        return view('singleisolatesampletest.view',compact('sglisampletest','sglisample','pathogen','antibiotic','testsensitivity'));
     }
@@ -36,9 +36,9 @@ class SingleIsolateSampleTestController extends Controller
   public function create($id)
     {
         $sglisample = Sglisample::get();
-    	  $sglisampletest = Sglisampletest::get();
-        $pathogen = Pathogen::get();
-        $antibiotic = Antibiotic::get();
+    	$sglisampletest = Sglisampletest::get();
+        $pathogen = Pathogen::get()->sortby("pathogen_name");
+        $antibiotic = Antibiotic::get()->sortby("antibiotic_name");
         $testsensitivity = Testsensitivitie::get();
         $sampleDetails = Sglisample::where('sample_id',$id)->first();
 
@@ -46,46 +46,40 @@ class SingleIsolateSampleTestController extends Controller
     }
 
 
-	 public function store(Request $request) 
+	public function store(Request $request) 
     {
         $user = Auth::user();
         $current_time = Carbon::now();
         $checkExistingId = Sglisampletest::where('sample_id',$request->sample_id)->get();
         // dd(count($checkExistingId));
         if (count($checkExistingId)!=0) {
-          Session::flash('message', 'Sample ID Already Exist');
-          return redirect('/singleisolatesampletest/view');
-        }
-        else{
-          foreach($request->antibiotics as $row=>$val)
-          {
-          //dd($request->testsensitivity[$val]);
-            DB::table('sglisampletests')->insert(['sample_id' => $request->sample_id, 
-            'pathogen_id' => $request->pathogen_id, 'antibiotic_id'=>$request->antibiotics[$row], 'test_sensitivity_id'=>$request->testsensitivity[$val],'created_by' => $user->id, 'created_at' => $current_time]);
-          }
-          return redirect('/singleisolatesampletest/view');
-        }
-        
+			Session::flash('message', 'Sample ID Already Exist');
+			return redirect('/singleisolatesampletest/view');
+        } else {
+			foreach($request->antibiotics as $row=>$val)
+			{
+				//dd($request->testsensitivity[$val]);
+				DB::table('sglisampletests')->insert(['sample_id' => $request->sample_id, 'pathogen_id' => $request->pathogen_id, 'antibiotic_id'=>$request->antibiotics[$row], 'test_sensitivity_id'=>$request->testsensitivity[$val],'created_by' => $user->id, 'created_at' => $current_time]);
+			}
+			return redirect('/singleisolatesampletest/view');
+        }        
     }
 
 
     public function DeleteSingleISampleTestID($id)
     {
-       
-      $sglisolatesampletestid = Sglisampletest::find($id);
+        $sglisolatesampletestid = Sglisampletest::find($id);
      
-      if($sglisolatesampletestid->delete()) {
-        Session::flash('message', 'Single Isolate Sample Test ID is Deleted from the Record!');
-
-      return redirect('/singleisolatesampletest/view');
-      }
+		if($sglisolatesampletestid->delete()) {
+			Session::flash('message', 'Single Isolate Sample Test ID is Deleted from the Record!');
+			return redirect('/singleisolatesampletest/view');
+		}
     }
 
 
-     public function SglISampleTestTableExport() 
+    public function SglISampleTestTableExport() 
     {
         return Excel::download(new SglisampletestsExport, 'SingleIsolateTestTable.xlsx');
-
     }
 
 

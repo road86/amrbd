@@ -37,10 +37,7 @@
                 <th scope="col">SL #</th>
                 <th scope="col">Testing Date</th>
                 <th scope="col">Institution Name</th>
-                <th scope="col">Species Name</th>
-                <th scope="col">Breed Name</th>
                 <th scope="col">Location on the body(Specimen)</th>
-                <th scope="col">Sampling Location</th>
                 <th scope="col">Test Method Name</th>
                 <th scope="col">Pathogen Name</th>
                 <th scope="col">Created By</th>
@@ -54,10 +51,7 @@
                 <th scope="row">{{ $count }}</th>
                 <td>{{ $val->test_date }}</td>
                 <td>{{ $val->institutions->institution_name }}</td>
-                <td>{{ $val->species->species_name }}</td>
-                <td>{{ $val->breed->breed_name }}</td>
-                <td>{{ $val->Specimen->specimen_name}}</td>
-                <td>{{ $val->specimencollectionlocation->specimen_location_name }}</td>  
+                <td>{{ $val->Specimen->specimen_name}}</td> 
                 <td>{{ $val->testmethod->test_method_name }}</td>                          
                 <td>{{ $val->pathogen->pathogen_name }}</td>
                 

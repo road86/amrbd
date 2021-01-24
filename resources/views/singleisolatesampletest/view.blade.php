@@ -34,7 +34,6 @@
                 <th scope="col">Pathogen Name</th>
                 <th scope="col">Antibiotic Name</th>
                 <th scope="col">Test Sensitivity Result</th>
-                <th scope="col">Created By</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -48,7 +47,6 @@
                 <td>{{ $val->pathogen->pathogen_name }}</td>
                 <td>{{ $val->antibiotic->antibiotic_name }}</td>
                 <td>{{ $val->testsensitivity->test_sensitivity_type }}</td>
-                <td>{{ $val->created_by }}</td>
                 <td>
                   <a class="btn btn-danger btn-sm" href="{{ url('/singleisolatesampletest/delete-sglisampletest-id/'.$val->test_id)}}">DELETE</a>
                 </td> 

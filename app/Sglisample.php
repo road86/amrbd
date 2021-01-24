@@ -12,7 +12,7 @@ class Sglisample extends Model
    		return $this->hasOne('App\Institutions','institution_id','institution_id');
    	}
 	
-	public function species()
+	/* public function species()
 	{
    		return $this->hasOne('App\Species','species_id','species_id');
    	}
@@ -21,7 +21,7 @@ class Sglisample extends Model
    	public function breed()
    	{
    		return $this->hasOne('App\Breed','breed_id','breed_id');
-   	}
+   	} */
 
 	public function specimen()
 	{
@@ -29,10 +29,10 @@ class Sglisample extends Model
    	}
 
 
-   	public function specimencollectionlocation()
+   	/* public function specimencollectionlocation()
   	 {
     return $this->hasOne('App\Specimencollectionlocation','specimen_location_id','specimen_location_id');
-     }
+     } */
 
      public function testmethod(){
    		return $this->hasOne('App\Testmethod','test_method_id','test_method_id');

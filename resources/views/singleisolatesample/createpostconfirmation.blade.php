@@ -32,43 +32,26 @@
                       </tr>
 
                       <tr>
-                        <td> 
-                          <label for=""><h4 style="color:green">Species Name : </h4></label>
-                               {{ $species }}
-                        </td>
-                        <td>
-                          <label for=""><h4 style="color:green">Breed Name :</h4></label>
-                          {{ $breeds }}
-                        </td>
-                      </tr>
-
-                      <tr>
                         <td>
                           <label for=""><h4 style="color:green">Specimen Name : </h4></label>
                           {{ $specimen}}
                         </td>
                         <td>
-                          <label for=""><h4 style="color:green">Sampling Location Name : </h4></label>
-                          {{ $specimencollectionlocation }}
+                          <label for=""><h4 style="color:green">Test Method Name: </h4></label>
+                         {{ $testmethods }}
                         </td>
                       </tr>
 
                       <tr>
                         <td>
-                          <label for=""><h4 style="color:green">Test Method Name: </h4></label>
-                         {{ $testmethods }}
-                        </td>
-                        <td>
                           <label for=""><h4 style="color:green">Pathogen Name :</h4></label>
                          {{ $pathogen}}
                         </td>
-                      </tr> 
-                      
-                      <tr>
-                        <td style="text-align: right">
+						<td style="text-align: right">
                           <button type="submit" class="btn btn-primary">Next</button>
                         </td>
-                      </tr>
+                      </tr> 
+                      
               
                     </table>
                       

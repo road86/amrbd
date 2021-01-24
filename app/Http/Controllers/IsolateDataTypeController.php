@@ -86,6 +86,14 @@ class IsolateDataTypeController extends Controller
 
 
 	public function UploadZipFile(Request $request) {
+		$validation = $request->validate([
+			'zip_file' => 'bail|required|mimes:zip,rar'
+		]);
+		
+		$file = $validation['zip_file'];
+		$path = $file->store('chevron_zips');
+		Session::flash('message', $path);
+		/* 
 		$validator = Validator::make($request->all(),[
 			'zip_file' => 'bail|required|mimes:zip,rar'
         ], $messages = [
@@ -102,17 +110,19 @@ class IsolateDataTypeController extends Controller
 			}
 		} else {
 			Session::flash('message', 'Please select a zip or rar archive that has RTF files only');
-		}
+		} */
 		return redirect('/isolatedatatype/isolatetypefileuploadview');
 	}
 	
 	public function UploadCSVFile(Request $request) {
-		$validator = Validator::make($request->all(),[
+		$validation = $request->validate([
 			'csv_file' => 'bail|required|mimes:csv,xls'
-        ], $messages = [
-			'mimes' => 'Please select a csv or xls file only'
 		]);
 		
+		$file = $validation['csv_file'];
+		$path = $file->store('epic_files');
+		Session::flash('message', $path);
+		/* 
 		if(!$validator->errors()) {
 			if($request->file('csv_file')) {
 				$path = $request->file('csv_file')->store('epic_files');
@@ -123,7 +133,7 @@ class IsolateDataTypeController extends Controller
 			}
 		} else {
 			Session::flash('message', 'Please select a csv or xls file only');
-		}
+		} */
 		return redirect('/isolatedatatype/isolatetypecsvuploadview');
 	}
 
