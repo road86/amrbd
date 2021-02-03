@@ -10,16 +10,16 @@
           <p class="alert {{ Session::get('alert-class', 'alert-warning') }}">{{ Session::get('message') }}</p>
           @endif
 
-           <h3 style="text-align: center; color:#5b92e5">List of Specimens</h3>
+           <h3 style="text-align: center; color:#5b92e5">List of Specimen categories</h3>
           <hr style="border: 5px solid green"> 
       
           <br>  
           
           <table class="table" width="100%">
               <tr>
-               <th scope="col" width="77.8%"><a class="btn btn-primary" href="{{ url('/') }}/specimen/create">Add New Specimen Name</a></th> 
-               <th scope="col"> <a class="btn btn-primary" href="{{ url('/') }}/specimen/excel">Export Excel</a></th> 
-               <th scope="col"> <a class="btn btn-primary" href="{{ url('/') }}/specimen/pdf">Export PDF</a></th> 
+               <th scope="col" width="77.8%"><a class="btn btn-primary" href="{{ url('/') }}/specimenCategory/create">Add New Specimen Category</a></th> 
+               <th scope="col"> <a class="btn btn-primary" href="{{ url('/') }}/specimenCategory/excel">Export Excel</a></th> 
+               <th scope="col"> <a class="btn btn-primary" href="{{ url('/') }}/specimenCategory/pdf">Export PDF</a></th> 
               </tr>
           </table>
        
@@ -28,22 +28,20 @@
             <thead>
               <tr>
                 <th scope="col">SL #</th>
-                <th scope="col">Specimen Name</th>
-                <th scope="col">Category</th>
+                <th scope="col">Specimen Category</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               <?php $count = 1; ?>
-              @foreach($specimens as $data)
+              @foreach($specimen_categories as $data)
               <tr>
                 <th scope="row">{{ $count }}</th>
-                <td>{{ $data->specimen_name }}</td>
-                <td style="text-align: center">{{ $data->SpecimenCategories->specimen_category_name }}</td>
+                <td>{{ $data->specimen_category_name }}</td>
                 <td style="text-align: center">
-                  <a class="btn btn-success btn-sm" href="{{ url('/specimen/edit-specimen-name/'.$data->specimen_id)}}">EDIT</a>
+                  <a class="btn btn-success btn-sm" href="{{ url('/specimenCategory/edit-specimen-category-name/'.$data->specimen_category_id)}}">EDIT</a>
        
-                  <a class="btn btn-danger btn-sm" href="{{ url('/specimen/delete-specimen-name/'.$data->specimen_id)}}">DELETE</a>
+                  <a class="btn btn-danger btn-sm" href="{{ url('/specimenCategory/delete-specimen-category-name/'.$data->specimen_category_id)}}">DELETE</a>
 
                 </td> 
               </tr>

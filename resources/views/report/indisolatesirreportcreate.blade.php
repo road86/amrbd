@@ -12,43 +12,12 @@
                  </div>
 
                 <div class="card-body">
-                     <form action="{{ url('/') }}/report/indisirreportcalculation" method="POST">
+                     <form action="{{ url('/') }}/report/indisirreportsymptomscreate" method="POST">
                     {{ csrf_field() }}
                   
 
                   <table id=tableview width="100%" align="center">
-                    <tr>
-                      <td width="34%">   
-                        <label for=""><h4>Institution Name</h4></label>
-                          <select name="institution" class="form-control">
-                            <option selected disabled value=""> Select Institution</option>
-                            @foreach($institution as $row=>$val)
-                             <option value="{{$val->institution_id}}">{{$val->institution_name}} </option>
-                            @endforeach
-                          </select>
-                      </td>
-                  
-                      <td width="33%"> 
-                          <label for=""><h4>Specimen</h4></label>
-                          <select name="specimen" class="form-control">
-                            <option selected disabled value=""> Select Specimen</option>
-                               @foreach($specimen as $row=>$val)
-                                <option value="{{$val->specimen_id}}"> {{$val->specimen_name}} </option>
-                                @endforeach
-                          </select>
-                      </td>
-
-                      <td width="33%">
-                          <label for=""><h4>Test Method Name</h4></label>
-                          <select name="testmethod" class="form-control">
-                            <option selected disabled value=""> Select Test Type</option>
-                              @foreach($testmethod as $row=>$val)
-                                <option value="{{$val->test_method_id}}"> {{$val->test_method_name}} </option>
-                              @endforeach
-                          </select>
-                      </td>
-                    </tr>
-
+                    
                       <tr>
                         <td>
                           <label for="from_test_date"><h4>From Test Date</h4></label>
@@ -58,14 +27,26 @@
                           <label for="to_test_date"><h4>To Test Date</h4></label>
                           <input type="date" class="form-control" name="to_test_date">
                         </td>
-                        <td>
-                          
-                          <button type="submit" class="btn btn-primary" style="text-align: center">Submit</button>
-                    
-                      
-                          <input type="reset" class="btn btn-danger" style="margin-left:10px;text-align: center" value="RESET">
-                        </td>
+                        
                       <tr>
+					  <tr>
+						  <td> 
+							  <label for=""><h4>Specimen Category</h4></label>
+							  <select name="specimenCategory" class="form-control" required>
+								<option selected disabled value=""> Select Specimen Category</option>
+								   @foreach($specimenCategories as $row=>$val)
+									<option value="{{$val->specimen_category_id}}"> {{$val->specimen_category_name}} </option>
+									@endforeach
+							  </select>
+						  </td>
+						  <td>
+							  
+							  <button type="submit" class="btn btn-primary" style="text-align: center">Submit</button>
+						
+						  
+							  <input type="reset" class="btn btn-danger" style="margin-left:10px;text-align: center" value="RESET">
+							</td>
+						</tr>
                   </table>                       
                   </form>
                 </div>    

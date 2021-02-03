@@ -57,6 +57,7 @@ Route::get('/report/view', 'ReportController@view');
 
 //Individual Isolate SIR Report create page
 Route::get('/report/indisirreportcreate', 'ReportController@IndIsirReportCreate');
+Route::post('/report/indisirreportsymptomscreate', 'ReportController@IndIsirReportSymptomsCalculation');
 Route::post('/report/indisirreportcalculation', 'ReportController@IndIsirReportCalculation');
 
 
@@ -229,6 +230,18 @@ Route::post('/specimen/update-specimen-name', 'SpecimenController@UpdateSpecimen
 
 Route::get('/specimen/pdf', 'SpecimenController@SpecimenPdfExport');
 Route::get('/specimen/pdfview', 'SpecimenController@PdfView');
+
+// Specimen Category CRUD
+
+Route::get('/specimenCategory/view', 'SpecimenCategoriesController@view');
+Route::get('/specimenCategory/create', 'SpecimenCategoriesController@create');
+Route::post('/specimenCategory/store', 'SpecimenCategoriesController@store');
+Route::get('/specimenCategory/delete-specimen-category-name/{id}', 'SpecimenCategoriesController@DeleteSpecimenCategoryName');
+Route::get('/specimenCategory/edit-specimen-category-name/{id}', 'SpecimenCategoriesController@EditSpecimenCategoryName');
+Route::post('/specimenCategory/update-specimen-category-name', 'SpecimenCategoriesController@UpdateSpecimenCategoryName');
+
+Route::get('/specimenCategory/pdf', 'SpecimenCategoriesController@SpecimenCategoriesPdfExport');
+Route::get('/specimenCategory/pdfview', 'SpecimenCategoriesController@PdfView');
 
 
 //Specimen Collection Location CRUD

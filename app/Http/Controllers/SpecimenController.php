@@ -8,6 +8,7 @@ use Auth;
 use Carbon\Carbon;
 use Session;
 use App\Specimen;
+use App\SpecimenCategories;
 use PDF;
 
 class SpecimenController extends Controller
@@ -29,15 +30,16 @@ class SpecimenController extends Controller
      */
     public function view()
     {
-        $specimen = DB::table('specimens')->get();
+		$specimens = Specimen::with('SpecimenCategories')->get();
 
-        return view('specimen.view', ['specimen'=>$specimen]);
+        return view('specimen.view', ['specimens'=>$specimens]);
     }
 
 
     public function create() 
     {
-    return view('specimen.create');
+		$specimen_categories = SpecimenCategories::orderBy('specimen_category_name', 'asc')->get();
+		return view('specimen.create',compact('specimen_categories'));
     }
 
 
@@ -93,15 +95,16 @@ class SpecimenController extends Controller
 
     public function EditSpecimenName($id)
     {
-       
-     $specimenname = Specimen :: find($id);
-     return view('specimen.edit',compact('specimenname'));
+		$specimen_categories = SpecimenCategories::orderBy('specimen_category_name', 'asc')->get();
+		$specimen = Specimen::with('SpecimenCategories')->find($id);
+		return view('specimen.edit',compact('specimen','specimen_categories'));
     }
 
     public function UpdateSpecimenName(Request $request)
     {
         $specimenname = Specimen::find($request->specimen_id);
         $specimenname->specimen_name = $request->specimen_name;
+		$specimenname->specimen_category_id = $request->specimen_category;
                 
         if($specimenname->save()) {
         Session::flash('message', 'Specimen Name is Updated to the Record!');

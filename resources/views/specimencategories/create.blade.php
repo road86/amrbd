@@ -13,24 +13,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Specimen Form</div>
+                <div class="card-header">Specimen Category Form</div>
 
                 <div class="card-body">
 
-                    <form action="{{ url('/') }}/specimen/store" method="POST">
+                    <form action="{{ url('/') }}/specimenCategory/store" method="POST">
                       {{ csrf_field() }}
                       <div class="form-group">
-                        <label for="specimen_name">Specimen Name</label>
-                        <input type="text" class="form-control" required  name="specimen_name">
-                      </div>
-					  <div class="form-group">
-                        <label for="specimen_category">Specimen category</label>
-						<select name="specimen_category" class="form-control" required>
-						  <option selected disabled value=""> Select Specimen Category </option>
-						  @foreach($specimen_categories as $row=>$val)
-							  <option value="{{$val->specimen_category_id}}"> {{$val->specimen_category_name}} </option>
-						  @endforeach
-						</select>
+                        <label for="specimen_category_name">Specimen category Name</label>
+                        <input type="text" class="form-control"  name="specimen_category_name">
                       </div>
 
                       <button type="submit" class="btn btn-primary">Submit</button>

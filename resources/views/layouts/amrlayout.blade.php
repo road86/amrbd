@@ -232,6 +232,12 @@
                        <em class="fas fa-bars"></em><span>Breed</span>
                      </a></li>
 					@endif
+					 @if(auth('web')->user()->hasAnyPermission(['Specimen Categories']))
+                     <!-- Specimen category Menu-->
+                    <li class=" "><a href="{{url('/')}}/specimenCategory/view" title="Specimen categories" >
+                       <em class="fas fa-list-alt"></em><span>Specimen categories</span>
+                     </a></li>
+					@endif
 					 @if(auth('web')->user()->hasAnyPermission(['Specimen']))
                      <!-- Specimen Menu-->
                     <li class=" "><a href="{{url('/')}}/specimen/view" title="Specimen" >

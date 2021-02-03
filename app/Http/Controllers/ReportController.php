@@ -14,6 +14,7 @@ use App\Antibiotic;
 use App\Samples;
 use App\Institutions;
 use App\Specimen;
+use App\SpecimenCategories;
 use App\Testmethod;
 use App\Pathogen;
 use App\Testsensitivitie;
@@ -62,13 +63,9 @@ class ReportController extends Controller
 
     public function IndIsirReportCreate()
     {
-              
-            $institution = Institutions::orderBy('institution_name', 'asc')->get();
-            $specimen = Specimen::orderBy('specimen_name', 'asc')->get();
-            $testmethod = Testmethod::orderBy('test_method_name', 'asc')->get();
-
-                          
-        return view('report.indisolatesirreportcreate',compact('institution','specimen','testmethod'));
+		$specimenCategories = SpecimenCategories::orderBy('specimen_category_name', 'asc')->get();
+        
+        return view('report.indisolatesirreportcreate',compact('specimenCategories'));
     }
 
 
@@ -166,6 +163,93 @@ class ReportController extends Controller
                 $totalCount = array_sum($pathogenCount);
 
              return view('report/SpecimenReport',compact('testCount','sensitivity','testSensetivity','pathogen','antibiotic','pathogenName','antibioticName','pathogenCount','totalCount'));
+            }
+        }
+
+    }  //End of Individual Isolate SIR Data Report Calculation
+	
+	//Individual Isolate SIR Data Report Calculation Method specimen wise
+	
+	public function IndIsirReportSymptomsCalculation(Request $request)
+    { 
+            $testCount= array();
+            $sensitivity= array();
+            $pathogenCount=array();
+			
+			$specimen_category = SpecimenCategories::find($request->specimenCategory);
+			$specimenList = Specimen::where('specimen_category_id', $request->specimenCategory)->get();
+			$specimenListIDs = array();
+			foreach($specimenList as $specimen) {
+				$specimenListIDs[] = $specimen->specimen_id;
+			}
+				//dd($specimenListIDs);
+			
+
+            $getData=Sglisample::whereIn('specimen_id', $specimenListIDs)->with('sglisampletest');
+			
+    
+            //dd($getData->get());
+			if(isset($request->from_test_date) && isset($request->to_test_date)){
+				$getData=$getData->whereBetween('test_date',[$request->from_test_date,$request->to_test_date]); 
+			}
+
+            $getData=$getData->get();
+
+            //dd($getData);   
+           
+            $testSensetivity= Testsensitivitie::get();
+            $pathogen  = Pathogen::get()->sortby("pathogen_name");
+
+            foreach ($pathogen as $pkey => $pvalue) {
+				$pathogenName[$pvalue->pathogen_id] = $pvalue->pathogen_name;
+            }
+
+            $antibiotic  = Antibiotic::get()->sortby("antibiotic_name");
+
+            foreach ($antibiotic as $akey => $avalue) {
+                $antibioticName[$avalue->antibiotic_id] = $avalue->antibiotic_name;
+            }
+
+            foreach ($getData as $key => $value) {
+                $test=Sglisampletest::where('sample_id', $value->sample_id)->get(); 
+
+                $testCount[$value->pathogen_id] = count($test);
+                foreach ($test as $tKey => $tValue) {
+                    $testAntibiotic=Sglisampletest::where([['sample_id', $value->sample_id],['antibiotic_id',$tValue->antibiotic_id]])->get();
+                    $antibioticCount[$value->pathogen_id][$tValue->antibiotic_id] = count($testAntibiotic);
+                    foreach ($testSensetivity as $senkey => $senvalue) {
+                        foreach ($testAntibiotic as $Akey => $Avalue) {
+                            $count=Sglisampletest::where([['sample_id', $value->sample_id],['antibiotic_id',$tValue->antibiotic_id],['test_sensitivity_id',$senvalue->test_sensitivity_id]])->count();
+
+                            if (isset($sensitivity[$value->pathogen_id][$tValue->antibiotic_id][$senvalue->test_sensitivity_id])) {
+
+                                $sensitivity[$value->pathogen_id][$tValue->antibiotic_id][$senvalue->test_sensitivity_id] = $sensitivity[$value->pathogen_id][$tValue->antibiotic_id][$senvalue->test_sensitivity_id] + $count;
+                            }
+                            else{
+                                $sensitivity[$value->pathogen_id][$tValue->antibiotic_id][$senvalue->test_sensitivity_id] = $count;
+                            }
+                        }
+                    }
+                    
+                }       
+            }
+    
+
+        if('@if(count($testCount)>0)') {
+          Session::flash('message', 'Culture Sensitivity Pattern Testing for Single Isolate Data : Result for Antibiotic Sensitivity of ' . $specimen_category['specimen_category_name']);
+         
+            if('@if(count(pathogenCount)>0'){
+
+                foreach ($sensitivity as $skey => $svalue) {
+                    $pathogenCount[$skey]=0;
+                    foreach ($svalue as $row => $value) {
+                     $pathogenCount[$skey] = $pathogenCount[$skey]+ array_sum($value);
+                    }
+                }
+
+                $totalCount = array_sum($pathogenCount);
+
+             return view('report/SpecimenWiseReport',compact('testCount','sensitivity','testSensetivity','pathogen','antibiotic','pathogenName','antibioticName','pathogenCount','totalCount'));
             }
         }
 
