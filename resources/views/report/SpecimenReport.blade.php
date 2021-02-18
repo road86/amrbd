@@ -29,7 +29,7 @@
               <tr>
                 <th scope="col" width="20">Antibiotic</th>
                 @foreach($testCount as $countRow=>$countVal)
-                  <th scope="col" width="20">{{$pathogenName[$countRow]}}</th>                
+					<th scope="col" width="20">{{$pathogenName[$countRow]}}</th> 
 				@endforeach
               </tr>
             </thead>

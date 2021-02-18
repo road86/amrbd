@@ -31,14 +31,16 @@
                 @foreach($testCount as $countRow=>$countVal)
                   <th scope="col" width="20">{{$pathogenName[$countRow]}}</th>                
 				@endforeach
+				<th style="text-align: center">Total # of Isolates</th>
               </tr>
             </thead>
             @php $count = 0; @endphp
              <tbody>
               <tr>
-                <td><b>Poportion of Isolets</b></td>
+                <td><b>Poportion of Isolates</b></td>
                 @foreach($pathogenCount as $prow=>$pal)
-                  <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,2)}}%</b></td>
+                  <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,2)}}% <small><em>({{$pal}})</em></small></b>
+				  </td>
                 @endforeach
 				<td style="text-align: center"><b>{{number_format($totalCount)}}</b></td>
               </tr>
@@ -47,7 +49,7 @@
                   <td><b>{{$aName}}</b></td>
                   @foreach($sensitivity as $row=>$val)
                     @if(array_key_exists($aVal,$val))
-                      @php      
+                      @php
                       $total =0;                 
                         $s = $val[$aVal][1];
                         $i = $val[$aVal][2];
@@ -55,28 +57,26 @@
                         $total = $s + $i +$r; 
                         $count = $count + $total;
 
-                        $sen = number_format((($val[$aVal][1])*100)/$total,0);
+                        $sen = number_format(ceil((($val[$aVal][1])*100)/$total));
                       @endphp
                       <td 
                         @if($sen>=90)
-                          style="background-color:red;color:white;text-align: center";
+                          style="background-color:#51cf66;color:white;text-align: center";
                         @elseif($sen>=75 && $sen<=89)
-                          style="background-color:green;color:white;text-align: center";
+                          style="background-color:#fff68f;color:black;text-align: center";
                         @elseif($sen>=50 && $sen<=74)
-                          style="background-color:yellow;text-align: center";
+                          style="background-color:#5c7cfa;color:white;text-align: center";
                         @elseif($sen>0 && $sen<=49)
-                          style="background-color:mediumblue;color:white;text-align: center";
-                          @elseif($sen==0)
+                          style="background-color:#f03e3e;color:white;text-align: center";
+                        @elseif($sen==0)
                           style="background-color:white;color:black;text-align: center";
                         @endif
                       >
-
-                          {{number_format((($val[$aVal][1])*100)/$total,2)}}% 
-
-
+                          {{$sen}}% <small><em>({{$total}})</em></small>
                       </td>
                       @else
-                      <td style="text-align: center;">---</td>
+                      <td style="background-color:white;color:black;text-align: center;">--- <small><em>(0)</em></small>
+					  </td>
                       @endif
                     @endforeach
                           
