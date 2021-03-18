@@ -7,12 +7,12 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                   <h3 style="text-align: center;color:#5b92e5">Generate Report for Individual Isolate [S|I|R] Data by Specimen</h3>
+                   <h3 style="text-align: center;color:#5b92e5">Generate Report for Individual Isolate [S|I|R] Data by pathogen</h3>
                    <hr style="border: 5px solid green;border-radius: 5px"> 
                  </div>
 
                 <div class="card-body">
-                     <form action="{{ url('/') }}/report/indisirreportsymptomscreate" method="POST">
+                     <form action="{{ url('/') }}/report/indisirreportpathogenscreate" method="POST">
                     {{ csrf_field() }}
                   
 
@@ -31,11 +31,11 @@
                       <tr>
 					  <tr>
 						  <td> 
-							  <label for=""><h4>Specimen Category</h4></label>
-							  <select name="specimenCategory" class="form-control" required>
-								<option selected disabled value=""> Select Specimen Category</option>
-								   @foreach($specimenCategories as $row=>$val)
-									<option value="{{$val->specimen_category_id}}"> {{$val->specimen_category_name}} </option>
+							  <label for=""><h4>Pathogen</h4></label>
+							  <select name="pathogen" class="form-control" required>
+								<option selected disabled value=""> Select a pathogen</option>
+								   @foreach($pathogens as $row=>$val)
+									<option value="{{$val->pathogen_id}}"> {{$val->pathogen_name}} </option>
 									@endforeach
 							  </select>
 						  </td>

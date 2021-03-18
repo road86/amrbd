@@ -26,32 +26,24 @@
     <?php //echo 'Total Number of Isolate Tested: ' ?>
 
             <thead>
-				<tr>
-					<td style="text-align: center">Isolates</td>
-					<td style="text-align: center" colspan="{{sizeOf($pathogenCount)}}">Proportions</td>
-				</tr>
-				<tr>
-					<td style="text-align: center"><b>{{number_format($totalCount)}}</b></td>
-					@foreach($pathogenCount as $prow=>$pal)
-					  <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,0)}}% <small><em>({{$pal}})</em></small></b></td>
-					@endforeach
-				</tr>
-				<!-- <tr>
-					<td><b>Poportion of Isolates</b></td>
-					@foreach($pathogenCount as $prow=>$pal)
-					  <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,0)}}% <small><em>({{$pal}})</em></small></b></td>
-					@endforeach
-					<td style="text-align: center"><b>{{number_format($totalCount)}}</b></td>
-				</tr> -->
-				<tr>
-					<td style="border-left: 0"></td>
-					@foreach($testCount as $countRow=>$countVal)
-					  <th scope="col" width="20">{{$pathogenName[$countRow]}}</th>                
-					@endforeach
-				</tr>
+              <tr>
+                <th scope="col" width="20">Antibiotic</th>
+                @foreach($testCount as $countRow=>$countVal)
+                  <th scope="col" width="20">{{$pathogenName[$countRow]}}</th>                
+				@endforeach
+				<th style="text-align: center">Total # of Isolates</th>
+              </tr>
             </thead>
             @php $count = 0; @endphp
-            <tbody>
+             <tbody>
+              <tr>
+                <td><b>Poportion of Isolates</b></td>
+                @foreach($pathogenCount as $prow=>$pal)
+                  <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,0)}}% <small><em>({{$pal}})</em></small></b>
+				  </td>
+                @endforeach
+				<td style="text-align: center"><b>{{number_format($totalCount)}}</b></td>
+              </tr>
                @foreach($antibioticName as $aVal=>$aName)
               <tr>               
                   <td><b>{{$aName}}</b></td>

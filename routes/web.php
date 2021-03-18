@@ -58,8 +58,12 @@ Route::get('/report/view', 'ReportController@view');
 //Individual Isolate SIR Report create page
 Route::get('/report/indisirreportcreate', 'ReportController@IndIsirReportCreate');
 Route::post('/report/indisirreportsymptomscreate', 'ReportController@IndIsirReportSymptomsCalculation');
+
 Route::post('/report/indisirreportcalculation', 'ReportController@IndIsirReportCalculation');
 
+Route::get('/report/indisirpathogenreport', 'ReportController@IndIsirPathogenReport');
+//Route::post('/report/indisirreportpathogenscreate', 'ReportController@IndIsirReportPathogensCalculation');
+Route::post('/report/indisirreportpathogenscreate', 'ReportController@GeneratePathogenWiseAntibiogram');
 
 
 //Individual Isolate ZDIS Report create page

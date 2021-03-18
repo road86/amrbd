@@ -11,7 +11,11 @@
       
           <br> 
 
-        <a class="btn btn-primary" href="{{ url('/') }}/report/indisirreportcreate"><h3>Show Report on Individual Isolate Data (S/I/R)</h3></a>
+        <a class="btn btn-primary" href="{{ url('/') }}/report/indisirreportcreate"><h3>Show Report on Individual Isolate Data (S/I/R) - Specimen wise</h3></a>
+
+        <br><br>
+		
+		<a class="btn btn-primary" href="{{ url('/') }}/report/indisirpathogenreport"><h3>Show Report on Individual Isolate Data (S/I/R) - Pathogen wise</h3></a>
 
         <br><br>
         <a class="btn btn-primary" href="{{ url('/') }}/report/indizdisreportcreate"><h3>Show report on Individual Isolate Data (Zone Diameter Interpretative Standard (mm)</h3></a>
