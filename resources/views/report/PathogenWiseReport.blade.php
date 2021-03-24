@@ -45,26 +45,32 @@
 			  @foreach($ultimate_array as $antibiotic_id=>$specimen_category_sub)
 			  <tr>
 				<td ><b>{{$antibiotics[$antibiotic_id]}}</b></td>
-				@foreach($specimen_category_sub as $specimen_category_id=>$values)
-				@php
-					/* $spec_cat_total = $values["s"] + $values["i"] + $values["r"]; */
-					$colorCond = ceil(number_format($values["s"]/$values["t"]*100,2));
-				@endphp
-					<td 
-						@if($colorCond>=90)
-                          style="background-color:#51cf66;color:white;text-align: center";
-                        @elseif($colorCond>=75 && $colorCond<=89)
-                          style="background-color:#ff902b;color:white;text-align: center";
-                        @elseif($colorCond>=50 && $colorCond<=74)
-                          style="background-color:#fff68f;color:black;text-align: center";
-                        @elseif($colorCond>=0 && $colorCond<=49)
-                          style="background-color:#f03e3e;color:white;text-align: center";
-                        @elseif($colorCond==0)
-                          style="background-color:#f03e3e;color:white;text-align: center";
-                        @endif
-					>
-					{{$colorCond}}% <small><em>({{$values["t"]}})</em></small></td>
+				@foreach($spec_cat_wise_counts as $specimen_category_id=>$count)
+					@if(isset($specimen_category_sub[$specimen_category_id]))
+						@php
+							$values = $specimen_category_sub[$specimen_category_id];
+							/* $spec_cat_total = $values["s"] + $values["i"] + $values["r"]; */
+							$colorCond = ceil(number_format($values["s"]/$values["t"]*100,2));
+						@endphp
+						<td 
+							@if($colorCond>=90)
+							  style="background-color:#51cf66;color:white;text-align: center";
+							@elseif($colorCond>=75 && $colorCond<=89)
+							  style="background-color:#ff902b;color:white;text-align: center";
+							@elseif($colorCond>=50 && $colorCond<=74)
+							  style="background-color:#fff68f;color:black;text-align: center";
+							@elseif($colorCond>=0 && $colorCond<=49)
+							  style="background-color:#f03e3e;color:white;text-align: center";
+							@elseif($colorCond==0)
+							  style="background-color:#f03e3e;color:white;text-align: center";
+							@endif
+						>
+						{{$colorCond}}% <small><em>({{$values["t"]}})</em></small></td>
+					@else
+						<td style="align:center;">---</td>
+					@endif
 				@endforeach
+				
 				</tr>
 			  @endforeach
                

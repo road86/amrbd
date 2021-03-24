@@ -368,8 +368,18 @@ class ReportController extends Controller
 			dump($total); */
 		}
 		
-		arsort($spec_cat_wise_counts);
+		
+		
+		ksort($spec_cat_wise_counts);
+		
+		foreach($ultimate_array as $key=>$subArray) {
+			ksort($subArray);
+			$ultimate_array[$key] = $subArray;
+		}
 		ksort($ultimate_array);
+		
+		
+		//dd($ultimate_array);
 		
 		Session::flash('message', 'Culture Sensitivity Pattern Testing for Single Isolate Data : Result for Antibiotic Sensitivity of ' . $selected_pathogen_name);
          
