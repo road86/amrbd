@@ -67,7 +67,7 @@
 						>
 						{{$colorCond}}% <small><em>({{$values["t"]}})</em></small></td>
 					@else
-						<td style="align:center;">---</td>
+						<td style="text-align:center;">---</td>
 					@endif
 				@endforeach
 				

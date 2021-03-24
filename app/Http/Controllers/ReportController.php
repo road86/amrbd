@@ -476,7 +476,7 @@ class ReportController extends Controller
 			->get(); */
 		
 		// Get the selected pathogen name
-		$selected_pathogen_row  = DB::table('Pathogen')->where('pathogen_id',$selected_pathogen)->get();
+		$selected_pathogen_row  = DB::table('pathogen')->where('pathogen_id',$selected_pathogen)->get();
 		
 		// Get the antibiotics list
 		$antibiotics  = Antibiotic::pluck("antibiotic_name", "antibiotic_id")->sortby("antibiotic_name");
