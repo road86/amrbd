@@ -370,7 +370,7 @@ class ReportController extends Controller
 		
 		
 		
-		ksort($spec_cat_wise_counts);
+		arsort($spec_cat_wise_counts);
 		
 		foreach($ultimate_array as $key=>$subArray) {
 			ksort($subArray);
