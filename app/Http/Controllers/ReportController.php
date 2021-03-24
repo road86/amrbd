@@ -279,7 +279,7 @@ class ReportController extends Controller
 		
 		$selected_pathogen = $request->pathogen;
 		// Get the selected pathogen name
-		$selected_pathogen_name  = DB::table('Pathogen')->where('pathogen_id',$selected_pathogen)->get()[0]->pathogen_name;
+		$selected_pathogen_name  = DB::table('pathogen')->where('pathogen_id',$selected_pathogen)->get()[0]->pathogen_name;
 		// Get the antibiotics list
 		$antibiotics  = Antibiotic::pluck("antibiotic_name", "antibiotic_id")->sortby("antibiotic_name");
 		// Get the test sensitivities list
@@ -398,7 +398,7 @@ class ReportController extends Controller
 		
 		$selected_pathogen = $request->pathogen;
 		// Get the selected pathogen name
-		$selected_pathogen_name  = DB::table('Pathogen')->where('pathogen_id',$selected_pathogen)->get()[0]->pathogen_name;
+		$selected_pathogen_name  = DB::table('pathogen')->where('pathogen_id',$selected_pathogen)->get()[0]->pathogen_name;
 		// Get the antibiotics list
 		$antibiotics  = Antibiotic::pluck("antibiotic_name", "antibiotic_id");
 		// Get the test sensitivities list
