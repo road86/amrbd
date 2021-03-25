@@ -33,7 +33,9 @@
 				<tr>
 					<td style="text-align: center"><b>{{number_format($totalCount)}}</b></td>
 					@foreach($pathogenCount as $prow=>$pal)
-					  <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,0)}}% <small><em>({{$pal}})</em></small></b></td>
+					  <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,0)}}% <small><em>({{$pal}})</em></small></b><br />
+						{{$pathogenName[$prow]}}
+					  </td>
 					@endforeach
 				</tr>
 				<!-- <tr>
@@ -42,13 +44,13 @@
 					  <td style="text-align: center"><b>{{number_format(($pal/$totalCount)*100,0)}}% <small><em>({{$pal}})</em></small></b></td>
 					@endforeach
 					<td style="text-align: center"><b>{{number_format($totalCount)}}</b></td>
-				</tr> -->
+				</tr>
 				<tr>
 					<td style="border-left: 0"></td>
 					@foreach($testCount as $countRow=>$countVal)
 					  <th scope="col" width="20">{{$pathogenName[$countRow]}}</th>                
 					@endforeach
-				</tr>
+				</tr> -->
             </thead>
             @php $count = 0; @endphp
             <tbody>
@@ -69,22 +71,22 @@
                       @endphp
                       <td 
                         @if($sen>=90)
-                          style="background-color:#51cf66;color:white;text-align: center";
+                          style="background-color:#96eb34;color:black;text-align: center";
                         @elseif($sen>=75 && $sen<=89)
-                          style="background-color:#ff902b;color:white;text-align: center";
+                          style="background-color:#ebcd34;color:black;text-align: center";
                         @elseif($sen>=50 && $sen<=74)
-                          style="background-color:#fff68f;color:black;text-align: center";
+                          style="background-color:#eb9934;color:black;text-align: center";
                         @elseif($sen>=0 && $sen<=49)
-                          style="background-color:#f03e3e;color:white;text-align: center";
+                          style="background-color:#eb4934;color:black;text-align: center";
                         @elseif($sen==0)
-                          style="background-color:#f03e3e;color:white;text-align: center";
+                          style="background-color:#eb4934;color:black;text-align: center";
                         @endif
                       >
                           {{$sen}}% <small><em>({{$total}})</em></small>
                       </td>
 					  <!-- style="background-color:white;color:black;text-align: center"; -->
                       @else
-                      <td style="background-color:white;color:black;text-align: center;">--- <small><em>(0)</em></small>
+                      <td style="color:black;text-align: center;">-</small>
 					  </td>
                       @endif
                     @endforeach

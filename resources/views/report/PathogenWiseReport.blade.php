@@ -54,20 +54,20 @@
 						@endphp
 						<td 
 							@if($colorCond>=90)
-							  style="background-color:#51cf66;color:white;text-align: center";
+							  style="background-color:#96eb34;color:black;text-align: center";
 							@elseif($colorCond>=75 && $colorCond<=89)
-							  style="background-color:#ff902b;color:white;text-align: center";
+							  style="background-color:#ebcd34;color:black;text-align: center";
 							@elseif($colorCond>=50 && $colorCond<=74)
-							  style="background-color:#fff68f;color:black;text-align: center";
+							  style="background-color:#eb9934;color:black;text-align: center";
 							@elseif($colorCond>=0 && $colorCond<=49)
-							  style="background-color:#f03e3e;color:white;text-align: center";
+							  style="background-color:#eb4934;color:black;text-align: center";
 							@elseif($colorCond==0)
-							  style="background-color:#f03e3e;color:white;text-align: center";
+							  style="background-color:#eb4934;color:black;text-align: center";
 							@endif
 						>
 						{{$colorCond}}% <small><em>({{$values["t"]}})</em></small></td>
 					@else
-						<td style="text-align:center;">---</td>
+						<td style="text-align:center;">-</td>
 					@endif
 				@endforeach
 				
