@@ -57,7 +57,8 @@ Route::get('/report/view', 'ReportController@view');
 
 //Individual Isolate SIR Report create page
 Route::get('/report/indisirreportcreate', 'ReportController@IndIsirReportCreate');
-Route::post('/report/indisirreportsymptomscreate', 'ReportController@IndIsirReportSymptomsCalculation');
+//Route::post('/report/indisirreportsymptomscreate', 'ReportController@IndIsirReportSymptomsCalculation');
+Route::post('/report/indisirreportsymptomscreate', 'ReportController@GenerateSymptomWiseAntibiogram');
 
 Route::post('/report/indisirreportcalculation', 'ReportController@IndIsirReportCalculation');
 

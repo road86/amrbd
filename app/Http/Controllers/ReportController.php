@@ -267,9 +267,131 @@ class ReportController extends Controller
     }  //End of Individual Isolate SIR Data Report Calculation 
 
 
+	public function GenerateSymptomWiseAntibiogram(Request $request)
+	{
+		$end_date = date("Y-m-d");
+		$start_date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') + 1, date('Y')-1));
+		if ($request->from_test_date != null) {
+			$start_date = $request->from_test_date;
+		}
+		if ($request->to_test_date != null) {
+			$end_date = $request->to_test_date;
+		}
+		
+		$specimen_category = SpecimenCategories::find($request->specimenCategory);
+		$specimenList = Specimen::where('specimen_category_id', $request->specimenCategory)->get();
+		$specimenListIDs = array();
+		foreach($specimenList as $specimen) {
+			$specimenListIDs[] = $specimen->specimen_id;
+		}
+
+		$sgliSamples=Sglisample::whereIn('specimen_id', $specimenListIDs)
+			->whereBetween('test_date',[$start_date, $end_date])
+			->with('sglisampletest')
+			->get();
+			//->with('sglisampletest');
+
+		//$getData=$getData->get();
+
+		//dd($sgliSamples);
+		
+		// Get the selected specimen category name
+		$selected_specimen_category_name  = $specimen_category->specimen_category_name;
+		// Get the antibiotics list
+		$antibiotics  = Antibiotic::pluck("antibiotic_name", "antibiotic_id")->sortby("antibiotic_name");
+		// Get the test sensitivities list
+		$test_sensitivities  = Testsensitivitie::pluck("test_sensitivity_type","test_sensitivity_id");
+		$Pathogens = Pathogen::pluck('pathogen_name','pathogen_id');
+		
+		$ultimate_array = array();
+		$pathogen_wise_counts = array();
+		$total_isolates = 0;
+		
+		foreach($sgliSamples as $sgliSample) {
+			$sgliSampleTests = $sgliSample->sglisampletest;
+			$pathogen_id = $sgliSample->pathogen_id;
+			$pathogen = Pathogen::where('pathogen_id', $pathogen_id)->get();
+			
+			foreach($sgliSampleTests as $sgliSampleTest) {
+				$antibiotic_id = $sgliSampleTest->antibiotic_id;
+				
+				if (array_key_exists($antibiotic_id, $ultimate_array) === false) {
+					$ultimate_array[$antibiotic_id] = array();
+				}
+				
+				if (array_key_exists($pathogen_id, $pathogen_wise_counts) === false) {
+					$pathogen_wise_counts[$pathogen_id] = 0;
+				}
+				
+				if (array_key_exists($pathogen_id, $ultimate_array[$antibiotic_id]) === false) {
+					$ultimate_array[$antibiotic_id][$pathogen_id] = array();
+				}
+				
+				if (array_key_exists('s', $ultimate_array[$antibiotic_id][$pathogen_id]) === false) {
+					$ultimate_array[$antibiotic_id][$pathogen_id]['s'] = 0;
+				}
+				
+				/* if (array_key_exists('i', $ultimate_array[$antibiotic_id][$specimen_category_id]) === false) {
+					$ultimate_array[$antibiotic_id][$specimen_category_id]['i'] = 0;
+				}
+				
+				if (array_key_exists('r', $ultimate_array[$antibiotic_id][$specimen_category_id]) === false) {
+					$ultimate_array[$antibiotic_id][$specimen_category_id]['r'] = 0;
+				} */
+				
+				if (array_key_exists('t', $ultimate_array[$antibiotic_id][$pathogen_id]) === false) {
+					$ultimate_array[$antibiotic_id][$pathogen_id]['t'] = 0;
+				}
+				
+				if ($sgliSampleTest->test_sensitivity_id == 1) {
+					$ultimate_array[$antibiotic_id][$pathogen_id]['s']++;
+				}/*  else if ($sgliSampleTest->test_sensitivity_id == 2) {
+					$ultimate_array[$antibiotic_id][$specimen_category_id]['i']++;
+				} else if ($sgliSampleTest->test_sensitivity_id == 3) {
+					$ultimate_array[$antibiotic_id][$specimen_category_id]['r']++;
+				} */
+				
+				/* $testSensitivityCountS++;
+					$testSensitivityCountI++;
+					$testSensitivityCountR++; */
+				
+				$pathogen_wise_counts[$pathogen_id]++;
+				
+				$ultimate_array[$antibiotic_id][$pathogen_id]['t']++;
+				$total_isolates++;
+				
+				
+				/* if (array_key_exists('t', $ultimate_array[$specimen_category_id]) !== false) {
+					$ultimate_array[$specimen_category_id]['t']++;
+				} else {
+					$ultimate_array[$specimen_category_id]['t'] = 0;
+				} */
+			}
+			/* $total = $testSensitivityCountR + $testSensitivityCountS + $testSensitivityCountI;
+			dump($total); */
+		}
+		
+		
+		
+		arsort($pathogen_wise_counts);
+		
+		foreach($ultimate_array as $key=>$subArray) {
+			ksort($subArray);
+			$ultimate_array[$key] = $subArray;
+		}
+		ksort($ultimate_array);
+		
+		
+		//dd($ultimate_array);
+		
+		Session::flash('message', 'Culture Sensitivity Pattern : Result for Antibiotic Sensitivity of ' . $selected_specimen_category_name . ' between ' . $start_date . ' and ' . $end_date);
+         
+		return view('report/SpecimenWiseReport',compact('total_isolates','antibiotics','test_sensitivities','Pathogens', 'pathogen_wise_counts','ultimate_array'));
+	}
 	public function GeneratePathogenWiseAntibiogram(Request $request) 
 	{
-		$start_date = $end_date = date("Y-m-d");
+		$end_date = date("Y-m-d");
+		$start_date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') + 1, date('Y')-1));
 		if ($request->from_test_date != null) {
 			$start_date = $request->from_test_date;
 		}
@@ -381,74 +503,12 @@ class ReportController extends Controller
 		
 		//dd($ultimate_array);
 		
-		Session::flash('message', 'Culture Sensitivity Pattern Testing for Single Isolate Data : Result for Antibiotic Sensitivity of ' . $selected_pathogen_name);
+		Session::flash('message', 'Culture Sensitivity Pattern : Result for Antibiotic Sensitivity of ' . $selected_pathogen_name . ' between ' . $start_date . ' and ' . $end_date);
          
-		return view('report/PathogenWiseReport',compact('total_isolates','antibiotics','test_sensitivities','sgliSamples','SpecimenCategories', 'spec_cat_wise_counts', 'Specimens','ultimate_array'));
+		return view('report/PathogenWiseReport',compact('total_isolates','antibiotics','test_sensitivities','SpecimenCategories', 'spec_cat_wise_counts', 'Specimens','ultimate_array'));
 	}
 	
-	public function PathogenWiseAntibiogram(Request $request) 
-	{
-		$start_date = $end_date = date("Y-m-d");
-		if ($request->from_test_date != null) {
-			$start_date = $request->from_test_date;
-		}
-		if ($request->to_test_date != null) {
-			$end_date = $request->to_test_date;
-		}
-		
-		$selected_pathogen = $request->pathogen;
-		// Get the selected pathogen name
-		$selected_pathogen_name  = DB::table('pathogen')->where('pathogen_id',$selected_pathogen)->get()[0]->pathogen_name;
-		// Get the antibiotics list
-		$antibiotics  = Antibiotic::pluck("antibiotic_name", "antibiotic_id");
-		// Get the test sensitivities list
-		$test_sensitivities  = Testsensitivitie::pluck("test_sensitivity_type","test_sensitivity_id");
-		$SpecimenCategories = SpecimenCategories::pluck('specimen_category_name','specimen_category_id');
-		$Specimens = Specimen::pluck('specimen_name','specimen_id');
-		
-		//->join('specimen_categories','specimens.specimen_category_id','=','specimen_categories.specimen_category_id')
-		
-		$d2DArray = array();
-		
-		$sgliSamples = Sglisample::where('pathogen_id', $selected_pathogen)
-			->whereBetween('test_date',[$start_date, $end_date])
-			->with('sglisampletest')
-			->get();
-			
-		//dd($sgliSamples);
-		
-		foreach ($sgliSamples as $sample) {
-			$sampleTests = $sample->sglisampletest;
-			foreach($sampleTests as $sampleTest) {
-				if (array_key_exists($sample->specimen_id, $d2DArray) !== false && array_key_exists($sampleTest->antibiotic_id, $d2DArray[$sample->specimen_id])!==false) {
-					if ($sampleTest->test_sensitivity_id == 1) {
-						if (array_key_exists('s', $d2DArray[$sample->specimen_id][$sampleTest->antibiotic_id]) !==false)
-							$d2DArray[$sample->specimen_id][$sampleTest->antibiotic_id]['s']++;
-						else 
-							$d2DArray[$sample->specimen_id][$sampleTest->antibiotic_id]['s'] = 1;
-					} else {
-						if (array_key_exists('t', $d2DArray[$sample->specimen_id][$sampleTest->antibiotic_id]) !==false)
-							$d2DArray[$sample->specimen_id][$sampleTest->antibiotic_id]['t']++;
-						else 
-							$d2DArray[$sample->specimen_id][$sampleTest->antibiotic_id]['t'] = 1;
-					}
-				} else {
-					if ($sampleTest->test_sensitivity_id == 1) {
-						$d2DArray[$sample->specimen_id][$sampleTest->antibiotic_id]['s'] = 1;
-					} else {
-						$d2DArray[$sample->specimen_id][$sampleTest->antibiotic_id]['t'] = 1;
-					}
-				}
-			}
-		}
-		
-		//dd($d2DArray);
-		Session::flash('message', 'Culture Sensitivity Pattern Testing for Single Isolate Data : Result for Antibiotic Sensitivity of ' . $selected_pathogen_name);
-         
-		return view('report/PathogenWiseReport',compact('antibiotics','test_sensitivities','sgliSamples','SpecimenCategories', 'Specimens','d2DArray'));
-	}
-
-
+	
 	//Individual Isolate SIR Data Report based on pathogen
 	
 	public function IndIsirReportPathogensCalculation(Request $request)
