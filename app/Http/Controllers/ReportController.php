@@ -384,9 +384,9 @@ class ReportController extends Controller
 		
 		//dd($ultimate_array);
 		
-		Session::flash('message', 'Culture Sensitivity Pattern : Result for Antibiotic Sensitivity of ' . $selected_specimen_category_name . ' between ' . $start_date . ' and ' . $end_date);
+		Session::flash('message', 'Specimen-wise Culture Sensitivity Pattern : Result for Antibiotic Sensitivity');
          
-		return view('report/SpecimenWiseReport',compact('total_isolates','antibiotics','test_sensitivities','Pathogens', 'pathogen_wise_counts','ultimate_array'));
+		return view('report/SpecimenWiseReport',compact('total_isolates','antibiotics','test_sensitivities','Pathogens', 'selected_specimen_category_name','start_date','end_date', 'pathogen_wise_counts','ultimate_array'));
 	}
 	public function GeneratePathogenWiseAntibiogram(Request $request) 
 	{
@@ -503,9 +503,9 @@ class ReportController extends Controller
 		
 		//dd($ultimate_array);
 		
-		Session::flash('message', 'Culture Sensitivity Pattern : Result for Antibiotic Sensitivity of ' . $selected_pathogen_name . ' between ' . $start_date . ' and ' . $end_date);
+		Session::flash('message', 'Pathogen-wise Culture Sensitivity Pattern : Result for Antibiotic Sensitivity');
          
-		return view('report/PathogenWiseReport',compact('total_isolates','antibiotics','test_sensitivities','SpecimenCategories', 'spec_cat_wise_counts', 'Specimens','ultimate_array'));
+		return view('report/PathogenWiseReport',compact('total_isolates','antibiotics','test_sensitivities','selected_pathogen_name','start_date','end_date','SpecimenCategories', 'spec_cat_wise_counts', 'Specimens','ultimate_array'));
 	}
 	
 	
