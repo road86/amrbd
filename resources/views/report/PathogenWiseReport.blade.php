@@ -26,11 +26,11 @@
   <table id= "tableview" align="center">
             <thead>
 				<tr>
-					<td width="120" style="text-align: right;" colspan="{{sizeOf($ultimate_array)+1}}"><h3>Pathogen: {{$selected_pathogen_name}}</h3> Reports between {{$start_date}} and {{$end_date}} has been used to generate this antibiogram</td>
+					<td width="120" style="text-align: right;" colspan="{{sizeOf($spec_cat_wise_counts)+1}}"><h3>Pathogen: {{$selected_pathogen_name}}</h3> Reports between {{$start_date}} and {{$end_date}} has been used to generate this antibiogram</td>
 				</tr>
 				<tr>
 					<td scope="col" style="text-align: center;">Isolates</td>
-					<td width="120" style="text-align: center;" colspan="{{sizeOf($ultimate_array)}}">Proportions</td>
+					<td width="120" style="text-align: center;" colspan="{{sizeOf($spec_cat_wise_counts)}}">Proportions</td>
 				</tr>
 				<tr>
 					<td scope="col" style="text-align: center; "><b>{{number_format($total_isolates)}}</b></td>
